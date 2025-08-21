@@ -1,0 +1,162 @@
+﻿@model ProductManagementApp.Models.ProductListResponse
+@{
+    ViewData["Title"] = "Home";
+}
+
+<!-- Hero Section -->
+<section class="hero-section bg-primary text-white py-5 mb-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">Welcome to ProductHub</h1>
+                <p class="lead mb-4">Discover amazing products at unbeatable prices. Shop with confidence and enjoy fast delivery.</p>
+                <a href="@Url.Action("Index", "Products")" class="btn btn-light btn-lg">Shop Now</a>
+            </div>
+            <div class="col-lg-6">
+                <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop&crop=center" 
+                     class="img-fluid rounded shadow" alt="Shopping">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products -->
+<section class="featured-products py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Featured Products</h2>
+        <div class="row" id="featuredProductsGrid">
+            @if (Model?.Products != null)
+            {
+                @foreach (var product in Model.Products)
+                {
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card product-card h-100 shadow-sm">
+                            <img src="@product.Image" class="card-img-top product-image" alt="@product.Title" style="height: 250px; object-fit: contain; padding: 1rem; background: #f8f9fa;">
+                            <div class="card-body d-flex flex-column">
+                                <span class="badge bg-secondary mb-2">@product.Category</span>
+                                <h5 class="card-title">@product.Title</h5>
+                                <p class="text-primary fs-4 fw-bold">$@product.Price</p>
+                                <div class="rating mb-2">
+                                    @{
+                                        var fullStars = (int)Math.Floor(product.Rating.Rate);
+                                        var hasHalfStar = product.Rating.Rate % 1 != 0;
+                                        var emptyStars = 5 - (int)Math.Ceiling(product.Rating.Rate);
+                                    }
+                                    @for (int i = 0; i < fullStars; i++)
+                                    {
+                                        <i class="fas fa-star text-warning"></i>
+                                    }
+                                    @if (hasHalfStar)
+                                    {
+                                        <i class="fas fa-star-half-alt text-warning"></i>
+                                    }
+                                    @for (int i = 0; i < emptyStars; i++)
+                                    {
+                                        <i class="far fa-star text-warning"></i>
+                                    }
+                                    <span class="text-muted ms-2">(@product.Rating.Count)</span>
+                                </div>
+                                <div class="mt-auto d-flex gap-2">
+                                    <button class="btn btn-outline-primary home-view-product flex-fill" data-product-id="@product.Id">
+                                        View Details
+                                    </button>
+                                    <button class="btn btn-primary home-add-to-cart" data-product-id="@product.Id" title="Add to Cart">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <div class="text-center mt-4">
+            <a href="@Url.Action("Index", "Products")" class="btn btn-primary btn-lg">View All Products</a>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 text-center mb-4">
+                <i class="fas fa-shipping-fast text-primary fs-1 mb-3"></i>
+                <h4>Fast Delivery</h4>
+                <p>Quick and reliable shipping to your doorstep</p>
+            </div>
+            <div class="col-md-4 text-center mb-4">
+                <i class="fas fa-shield-alt text-primary fs-1 mb-3"></i>
+                <h4>Secure Payment</h4>
+                <p>Your transactions are safe and secure</p>
+            </div>
+            <div class="col-md-4 text-center mb-4">
+                <i class="fas fa-headset text-primary fs-1 mb-3"></i>
+                <h4>24/7 Support</h4>
+                <p>We're here to help whenever you need us</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Home page DOM loaded - setting up event listeners');
+            
+            document.querySelectorAll('.home-view-product').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Home view details clicked');
+                    const productId = parseInt(this.getAttribute('data-product-id'));
+                    console.log('Product ID:', productId);
+                    
+                    if (window.ProductModal) {
+                        window.ProductModal.show(productId);
+                    } else {
+                        console.error('ProductModal not available');
+                        alert('Product modal not loaded. Please refresh the page.');
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.home-add-to-cart').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Home add to cart clicked');
+                    const productId = parseInt(this.getAttribute('data-product-id'));
+                    
+                    const originalContent = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                    this.disabled = true;
+                    
+                    fetch(`/Products/GetProduct?id=${productId}`)
+                        .then(response => response.json())
+                        .then(product => {
+                            if (window.cartManager) {
+                                window.cartManager.addItem(product);
+                                
+                                // Visual feedback
+                                this.innerHTML = '<i class="fas fa-check"></i>';
+                                this.classList.add('btn-success');
+                                this.classList.remove('btn-primary');
+                                
+                                setTimeout(() => {
+                                    this.innerHTML = originalContent;
+                                    this.classList.remove('btn-success');
+                                    this.classList.add('btn-primary');
+                                    this.disabled = false;
+                                }, 1500);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error adding to cart:', error);
+                            this.innerHTML = originalContent;
+                            this.disabled = false;
+                            alert('Error adding to cart. Please try again.');
+                        });
+                });
+            });
+        });
+    </script>
+}

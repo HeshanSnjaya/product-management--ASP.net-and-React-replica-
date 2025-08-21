@@ -1,0 +1,229 @@
+:root {
+  --primary-color: #0d6efd;
+  --secondary-color: #6c757d;
+  --success-color: #198754;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --info-color: #0dcaf0;
+  --light-color: #f8f9fa;
+  --dark-color: #212529;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(135deg, var(--primary-color), #0a58ca);
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+}
+
+/* Product Cards */
+.product-card {
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  overflow: hidden;
+}
+
+.product-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
+}
+
+.product-image {
+  transition: all 0.3s ease;
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.05);
+}
+
+/* Rating Stars */
+.rating {
+  color: #ffc107;
+}
+
+/* Search Highlight */
+.highlight {
+  background-color: yellow;
+  font-weight: bold;
+  padding: 2px;
+}
+
+/* Cart Animation */
+@keyframes cartBounce {
+  0%, 20%, 60%, 100% {
+      transform: translateY(0);
+  }
+  40% {
+      transform: translateY(-10px);
+  }
+  80% {
+      transform: translateY(-5px);
+  }
+}
+
+.cart-bounce {
+  animation: cartBounce 0.6s;
+}
+
+/* Minimized Notification Styles */
+.minimized-notification {
+  position: fixed;
+  top: 80px;
+  right: 15px;
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 25px;
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 10000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateX(100%);
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  max-width: 200px;
+  text-align: center;
+}
+
+.minimized-notification.show {
+  transform: translateX(0);
+}
+
+.minimized-notification.fade-out {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+/* Loading States */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+/* Footer Social Links */
+.social-links a {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  text-align: center;
+  line-height: 40px;
+  transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Cart Items */
+.cart-item img {
+  max-width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+/* Modal Animations */
+.modal.fade .modal-dialog {
+  transform: scale(0.8);
+  transition: transform 0.3s ease;
+}
+
+.modal.show .modal-dialog {
+  transform: scale(1);
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .hero-section {
+      text-align: center;
+      min-height: 300px;
+      padding: 3rem 0;
+  }
+  
+  .hero-section .row {
+      flex-direction: column-reverse;
+  }
+  
+  .product-image {
+      height: 200px !important;
+  }
+  
+  .navbar-brand {
+      font-size: 1.1rem;
+  }
+  
+  .card-title {
+      font-size: 0.95rem;
+  }
+  
+  .minimized-notification {
+      right: 10px;
+      top: 70px;
+      font-size: 12px;
+      padding: 6px 12px;
+      max-width: 180px;
+  }
+}
+
+/* Animation for page transitions */
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+/* Button Hover Effects */
+.btn {
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Product Grid Responsive */
+@media (max-width: 576px) {
+  .col-sm-6 {
+      flex: 0 0 100%;
+      max-width: 100%;
+  }
+}

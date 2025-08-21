@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "I9yvp5XGOomVI581jzgkkobVK6rH6m9LH1svyNpfBU2fhXv51o9yZY8SW8e3SQF/LUyNIhx7JJREwaGax29jCA==",
+  "success": true,
+  "projectFilePath": "D:\\Heshan\\Developments\\test\\Frontend-Development-Assesment\\ProductManagementApp\\ProductManagementApp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\adeuser746\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\8.0.0\\microsoft.aspnetcore.jsonpatch.8.0.0.nupkg.sha512",
+    "C:\\Users\\adeuser746\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\8.0.0\\microsoft.aspnetcore.mvc.newtonsoftjson.8.0.0.nupkg.sha512",
+    "C:\\Users\\adeuser746\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
+    "C:\\Users\\adeuser746\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "C:\\Users\\adeuser746\\.nuget\\packages\\newtonsoft.json.bson\\1.0.2\\newtonsoft.json.bson.1.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}
